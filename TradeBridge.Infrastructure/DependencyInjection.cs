@@ -24,7 +24,6 @@ public static class DependencyInjection
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
         // Register services
-        services.AddScoped<IPowerBIService, PowerBIService>();
         services.AddScoped<IAuditService, AuditService>();
 
         return services;
