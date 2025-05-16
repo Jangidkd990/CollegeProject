@@ -113,8 +113,8 @@ public class ApplicationDbSeeder
         // Create admin user
         var adminUser = new IdentityUser
         {
-            UserName = "admin@prism.com",
-            Email = "admin@prism.com",
+            UserName = "admin@tradebridge.com",
+            Email = "admin@tradebridge.com",
             EmailConfirmed = true
         };
 
@@ -123,8 +123,8 @@ public class ApplicationDbSeeder
         // Create manager user
         var managerUser = new IdentityUser
         {
-            UserName = "manager@prism.com",
-            Email = "manager@prism.com",
+            UserName = "manager@tradebridge.com",
+            Email = "manager@tradebridge.com",
             EmailConfirmed = true
         };
 
@@ -133,8 +133,8 @@ public class ApplicationDbSeeder
         // Create viewer user
         var viewerUser = new IdentityUser
         {
-            UserName = "viewer@prism.com",
-            Email = "viewer@prism.com",
+            UserName = "viewer@tradebridge.com",
+            Email = "viewer@tradebridge.com",
             EmailConfirmed = true
         };
 
@@ -577,10 +577,10 @@ public class ApplicationDbSeeder
                     Description = "Quarterly revenue forecast for all customer contracts for 2025.",
                     IsActive = true,
                     IsApproved = true,
-                    ApprovedBy = "admin@prism.com",
+                    ApprovedBy = "admin@tradebridge.com",
                     ApprovalDate = DateTime.Today.AddDays(-5),
                     CreatedDate = DateTime.Today.AddDays(-30),
-                    CreatedBy = "admin@prism.com"
+                    CreatedBy = "admin@tradebridge.com"
                 },
                 new Forecast
                 {
@@ -592,7 +592,7 @@ public class ApplicationDbSeeder
                     IsActive = true,
                     IsApproved = false,
                     CreatedDate = DateTime.Today.AddDays(-15),
-                    CreatedBy = "manager@prism.com"
+                    CreatedBy = "manager@tradebridge.com"
                 },
                 new Forecast
                 {
@@ -604,7 +604,7 @@ public class ApplicationDbSeeder
                     IsActive = true,
                     IsApproved = false,
                     CreatedDate = DateTime.Today.AddDays(-10),
-                    CreatedBy = "manager@prism.com"
+                    CreatedBy = "manager@tradebridge.com"
                 }
             };
 
