@@ -65,24 +65,15 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="forecastingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Forecasting
+                            <a class="nav-link dropdown-toggle" href="#" id="bearingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Bearings
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="forecastingDropdown">
-                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="Index">Forecasts</a></li>
-                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="Create">Create Forecast</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="bearingsDropdown">
+                                <li><a class="dropdown-item" asp-controller="Bearings" asp-action="Index">Bearings Inventory</a></li>
+                                <li><a class="dropdown-item" asp-controller="Bearings" asp-action="Create">Add Bearing</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="BorrowingRecords">UF6 Borrowing</a></li>
-                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="AddBorrowingRecord">Add UF6 Transaction</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="productionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Production
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="productionDropdown">
-                                <li><a class="dropdown-item" asp-controller="Production" asp-action="Index">Production Forecasts</a></li>
-                                <li><a class="dropdown-item" asp-controller="Production" asp-action="Create">Add Forecast</a></li>
+                                <li><a class="dropdown-item" asp-controller="Bearings" asp-action="Categories">Bearing Categories</a></li>
+                                <li><a class="dropdown-item" asp-controller="Bearings" asp-action="Specifications">Specifications</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">

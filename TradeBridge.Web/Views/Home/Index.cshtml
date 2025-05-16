@@ -14,7 +14,7 @@
                     <h2 class="card-title">Project for Reporting, Intelligence & Strategic Management</h2>
                     <p class="card-text">
                         TradeBridge provides a comprehensive solution for managing ConverDyn's commercial operations including customers, 
-                        suppliers, contracts, forecasting, transportation, and financial planning.
+                        suppliers, contracts, bearings, transportation, and financial planning.
                     </p>
                 </div>
             </div>
@@ -64,14 +64,14 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
-                            <div class="text-white-75 small">Production Forecasts</div>
-                            <div class="text-lg fw-bold">@Model.ProductionForecastCount</div>
+                            <div class="text-white-75 small">Bearings Inventory</div>
+                            <div class="text-lg fw-bold">53</div>
                         </div>
-                        <i class="fas fa-industry fa-2x text-white-50"></i>
+                        <i class="fas fa-cog fa-2x text-white-50"></i>
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" asp-controller="Production" asp-action="Index">View Production</a>
+                    <a class="small text-white stretched-link" asp-controller="Bearings" asp-action="Index">View Bearings</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -96,21 +96,21 @@
         </div>
     </div>
     
-    <!-- Forecasting Stats -->
+    <!-- Bearings Stats -->
     <div class="row mb-4">
         <div class="col-md-6 mb-3">
             <div class="card bg-warning text-dark h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
-                            <div class="text-dark-75 small">Active Forecasts</div>
-                            <div class="text-lg fw-bold">@Model.ActiveForecastCount</div>
+                            <div class="text-dark-75 small">Bearing Categories</div>
+                            <div class="text-lg fw-bold">8</div>
                         </div>
-                        <i class="fas fa-chart-line fa-2x text-dark-50"></i>
+                        <i class="fas fa-tags fa-2x text-dark-50"></i>
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-dark stretched-link" asp-controller="Forecast" asp-action="Index">View Forecasts</a>
+                    <a class="small text-dark stretched-link" asp-controller="Bearings" asp-action="Categories">View Categories</a>
                     <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -121,14 +121,14 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
-                            <div class="text-white-75 small">Pending UF6 Repayments</div>
-                            <div class="text-lg fw-bold">@Model.PendingUF6RepaymentCount</div>
+                            <div class="text-white-75 small">Low Stock Items</div>
+                            <div class="text-lg fw-bold">12</div>
                         </div>
                         <i class="fas fa-exclamation-triangle fa-2x text-white-50"></i>
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" asp-controller="UF6Borrowing" asp-action="Index">View UF6 Borrowings</a>
+                    <a class="small text-white stretched-link" asp-controller="Bearings" asp-action="LowStock">View Low Stock</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -146,7 +146,7 @@
                     <ul>
                         <li>Customer Profiles (@Model.CustomerCount total)</li>
                         <li>Contract Management (@Model.ContractCount total)</li>
-                        <li>Delivery Forecasting</li>
+                        <li>Delivery Scheduling</li>
                         <li>Revenue Tracking</li>
                     </ul>
                     <a asp-controller="Customers" asp-action="Index" class="btn btn-outline-success">Go to Customers</a>
@@ -175,22 +175,22 @@
         <div class="col-md-4 mb-4">
             <div class="card h-100">
                 <div class="card-header bg-warning text-dark">
-                    <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Forecasting & Reporting</h5>
+                    <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Bearings Inventory</h5>
                 </div>
                 <div class="card-body">
-                    <p>Comprehensive forecasting with UF6 borrowing and repayment tracking.</p>
+                    <p>Comprehensive bearing inventory management system.</p>
                     <ul>
-                        <li>Forecast Management (@Model.ForecastCount total)</li>
-                        <li>Quantity and Price Forecasts</li>
-                        <li>UF6 Borrowing (@Model.UF6BorrowingCount transactions)</li>
-                        <li>Variance Analysis</li>
+                        <li>Bearing Catalog Management</li>
+                        <li>Stock Tracking</li>
+                        <li>Specifications & Documentation</li>
+                        <li>Usage Analysis</li>
                     </ul>
                     <div class="row">
                         <div class="col-6">
-                            <a asp-controller="Forecast" asp-action="Index" class="btn btn-outline-warning w-100">Forecasts</a>
+                            <a asp-controller="Bearings" asp-action="Index" class="btn btn-outline-warning w-100">Inventory</a>
                         </div>
                         <div class="col-6">
-                            <a asp-controller="UF6Borrowing" asp-action="Index" class="btn btn-outline-warning w-100">UF6 Borrowing</a>
+                            <a asp-controller="Bearings" asp-action="Categories" class="btn btn-outline-warning w-100">Categories</a>
                         </div>
                     </div>
                 </div>
@@ -225,19 +225,19 @@
         <div class="col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-header bg-danger text-white">
-                    <h5 class="mb-0"><i class="fas fa-industry me-2"></i>Production Planning</h5>
+                    <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Bearing Specifications</h5>
                 </div>
                 <div class="card-body">
-                    <p>Manage quarterly production forecasts and align production with delivery schedules.</p>
+                    <p>Manage technical specifications and documentation for bearings inventory.</p>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <div class="d-grid">
-                                <a asp-controller="Production" asp-action="Index" class="btn btn-outline-danger">Production Forecasts</a>
+                                <a asp-controller="Bearings" asp-action="Specifications" class="btn btn-outline-danger">Specifications</a>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="d-grid">
-                                <a asp-controller="Production" asp-action="Create" class="btn btn-outline-danger">Add Forecast</a>
+                                <a asp-controller="Bearings" asp-action="Create" class="btn btn-outline-danger">Add Bearing</a>
                             </div>
                         </div>
                     </div>

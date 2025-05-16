@@ -1,0 +1,335 @@
+@{
+    ViewData["Title"] = "Bearing Specifications";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Bearing Specifications</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Bearings" asp-action="Index">Bearings</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Specifications</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <i class="fas fa-tools me-1"></i>
+                Bearing Technical Specifications
+            </div>
+            <div>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#searchSpecsModal">
+                    <i class="fas fa-search"></i> Search Specifications
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <ul class="nav nav-tabs" id="specificationsTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="dimensions-tab" data-bs-toggle="tab" data-bs-target="#dimensions" type="button" role="tab" aria-controls="dimensions" aria-selected="true">Dimensions</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="load-ratings-tab" data-bs-toggle="tab" data-bs-target="#load-ratings" type="button" role="tab" aria-controls="load-ratings" aria-selected="false">Load Ratings</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="materials-tab" data-bs-toggle="tab" data-bs-target="#materials" type="button" role="tab" aria-controls="materials" aria-selected="false">Materials</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tolerances-tab" data-bs-toggle="tab" data-bs-target="#tolerances" type="button" role="tab" aria-controls="tolerances" aria-selected="false">Tolerances</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="lubrication-tab" data-bs-toggle="tab" data-bs-target="#lubrication" type="button" role="tab" aria-controls="lubrication" aria-selected="false">Lubrication</button>
+                </li>
+            </ul>
+            <div class="tab-content mt-3" id="specificationsTabContent">
+                <div class="tab-pane fade show active" id="dimensions" role="tabpanel" aria-labelledby="dimensions-tab">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Part Number</th>
+                                    <th>Bore Diameter (mm)</th>
+                                    <th>Outer Diameter (mm)</th>
+                                    <th>Width (mm)</th>
+                                    <th>Fillet Radius (mm)</th>
+                                    <th>Weight (kg)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>BRG-001</td>
+                                    <td>25</td>
+                                    <td>52</td>
+                                    <td>15</td>
+                                    <td>1.0</td>
+                                    <td>0.125</td>
+                                </tr>
+                                <tr>
+                                    <td>BRG-002</td>
+                                    <td>30</td>
+                                    <td>62</td>
+                                    <td>16</td>
+                                    <td>1.1</td>
+                                    <td>0.175</td>
+                                </tr>
+                                <tr>
+                                    <td>BRG-003</td>
+                                    <td>40</td>
+                                    <td>80</td>
+                                    <td>18</td>
+                                    <td>1.5</td>
+                                    <td>0.290</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="load-ratings" role="tabpanel" aria-labelledby="load-ratings-tab">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Part Number</th>
+                                    <th>Dynamic Load Rating (kN)</th>
+                                    <th>Static Load Rating (kN)</th>
+                                    <th>Limiting Speed (rpm)</th>
+                                    <th>Reference Speed (rpm)</th>
+                                    <th>Max. Operating Temp (°C)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>BRG-001</td>
+                                    <td>14.8</td>
+                                    <td>7.8</td>
+                                    <td>18000</td>
+                                    <td>22000</td>
+                                    <td>120</td>
+                                </tr>
+                                <tr>
+                                    <td>BRG-002</td>
+                                    <td>19.5</td>
+                                    <td>11.2</td>
+                                    <td>15000</td>
+                                    <td>18000</td>
+                                    <td>120</td>
+                                </tr>
+                                <tr>
+                                    <td>BRG-003</td>
+                                    <td>32.5</td>
+                                    <td>21.6</td>
+                                    <td>12000</td>
+                                    <td>14000</td>
+                                    <td>120</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="materials" role="tabpanel" aria-labelledby="materials-tab">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Material specifications are available for all bearing types. Please select a specific bearing for detailed materials information.
+                    </div>
+                    <p>Common materials used in our bearings:</p>
+                    <ul>
+                        <li><strong>Rings and rolling elements:</strong> Chrome steel (AISI 52100, 100Cr6)</li>
+                        <li><strong>Cages:</strong> Steel, brass, polyamide, PEEK</li>
+                        <li><strong>Seals:</strong> NBR, FKM, PTFE</li>
+                        <li><strong>Specialty applications:</strong> Stainless steel (AISI 440C), ceramic (Si3N4, ZrO2)</li>
+                    </ul>
+                    <p>Material selection is based on application requirements including load, speed, temperature, and environmental conditions.</p>
+                </div>
+                <div class="tab-pane fade" id="tolerances" role="tabpanel" aria-labelledby="tolerances-tab">
+                    <p>Our bearings are manufactured to meet or exceed industry standard tolerance classes.</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Radial Bearings</h5>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Tolerance Class</th>
+                                            <th>Description</th>
+                                            <th>Applications</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>P0 (Normal)</td>
+                                            <td>Standard precision</td>
+                                            <td>General applications</td>
+                                        </tr>
+                                        <tr>
+                                            <td>P6</td>
+                                            <td>Higher precision</td>
+                                            <td>Electric motors, pumps</td>
+                                        </tr>
+                                        <tr>
+                                            <td>P5</td>
+                                            <td>High precision</td>
+                                            <td>Machine tool spindles</td>
+                                        </tr>
+                                        <tr>
+                                            <td>P4</td>
+                                            <td>Very high precision</td>
+                                            <td>High-speed applications</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Axial Bearings</h5>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Tolerance Class</th>
+                                            <th>Description</th>
+                                            <th>Applications</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>AT0 (Normal)</td>
+                                            <td>Standard precision</td>
+                                            <td>General thrust applications</td>
+                                        </tr>
+                                        <tr>
+                                            <td>AT1</td>
+                                            <td>Higher precision</td>
+                                            <td>Vertical shafts, pumps</td>
+                                        </tr>
+                                        <tr>
+                                            <td>AT2</td>
+                                            <td>High precision</td>
+                                            <td>Machine tools, turbines</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="lubrication" role="tabpanel" aria-labelledby="lubrication-tab">
+                    <h5>Recommended Lubrication</h5>
+                    <p>Proper lubrication is essential for bearing performance and service life. Our bearings are available with various lubrication options:</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header">Grease Lubrication</div>
+                                <div class="card-body">
+                                    <p>Pre-greased bearings are available with:</p>
+                                    <ul>
+                                        <li>Lithium-based greases for general applications</li>
+                                        <li>High-temperature greases</li>
+                                        <li>Food-grade greases</li>
+                                        <li>Water-resistant greases</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header">Oil Lubrication</div>
+                                <div class="card-body">
+                                    <p>Oil lubrication is recommended for:</p>
+                                    <ul>
+                                        <li>High-speed applications</li>
+                                        <li>High-temperature environments</li>
+                                        <li>Applications requiring heat removal</li>
+                                        <li>Precise torque control</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Consult our engineering team for specific lubrication recommendations for your application.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search Specifications Modal -->
+<div class="modal fade" id="searchSpecsModal" tabindex="-1" aria-labelledby="searchSpecsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchSpecsModalLabel">Search Specifications</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="partNumber" class="form-label">Part Number</label>
+                        <input type="text" class="form-control" id="partNumber" placeholder="Enter part number...">
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" id="category">
+                            <option value="" selected>All Categories</option>
+                            <option value="ball">Ball Bearings</option>
+                            <option value="roller">Roller Bearings</option>
+                            <option value="thrust">Thrust Bearings</option>
+                            <option value="mounted">Mounted Bearings</option>
+                            <option value="linear">Linear Bearings</option>
+                            <option value="specialty">Specialty Bearings</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="minBore" class="form-label">Min. Bore (mm)</label>
+                                <input type="number" class="form-control" id="minBore" placeholder="Min">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="maxBore" class="form-label">Max. Bore (mm)</label>
+                                <input type="number" class="form-control" id="maxBore" placeholder="Max">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="minOD" class="form-label">Min. OD (mm)</label>
+                                <input type="number" class="form-control" id="minOD" placeholder="Min">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="maxOD" class="form-label">Max. OD (mm)</label>
+                                <input type="number" class="form-control" id="maxOD" placeholder="Max">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+                // Store the active tab
+                localStorage.setItem('activeSpecsTab', $(e.target).attr('id'));
+            });
+            
+            // Check if there's a stored active tab
+            var activeTab = localStorage.getItem('activeSpecsTab');
+            if (activeTab) {
+                $('#' + activeTab).tab('show');
+            }
+        });
+    </script>
+} 
