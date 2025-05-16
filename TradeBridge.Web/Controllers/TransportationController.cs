@@ -72,8 +72,7 @@ public class TransportationController : Controller
     [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Create(TransportationPlan plan)
     {
-        if (ModelState.IsValid)
-        {
+        
             plan.CreatedBy = User.Identity?.Name ?? "Unknown";
 
             // Calculate total estimated cost
@@ -88,10 +87,6 @@ public class TransportationController : Controller
                 AuditAction.Create);
 
             return RedirectToAction(nameof(Details), new { id = result.Id });
-        }
-
-        await PopulateLocationDropdownsAsync();
-        return View(plan);
     }
 
     [Authorize(Roles = "Admin,Manager")]
@@ -199,8 +194,7 @@ public class TransportationController : Controller
     [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> CreateRate(ShippingRate rate)
     {
-        if (ModelState.IsValid)
-        {
+        
             rate.CreatedBy = User.Identity?.Name ?? "Unknown";
             var result = await _rateRepository.AddAsync(rate);
 
@@ -211,10 +205,6 @@ public class TransportationController : Controller
                 AuditAction.Create);
 
             return RedirectToAction(nameof(ShippingRates));
-        }
-
-        await PopulateLocationDropdownsAsync();
-        return View(rate);
     }
 
     [Authorize(Roles = "Admin,Manager")]

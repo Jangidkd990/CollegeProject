@@ -23,11 +23,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Dashboard" asp-action="Index">
-                                <i class="fas fa-tachometer-alt me-1"></i> Dashboard
-                            </a>
-                        </li>
+                      
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="customerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Customers
@@ -64,27 +60,8 @@
                                 <li><a class="dropdown-item" asp-controller="Locations" asp-action="Create">Add Location</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="forecastingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Forecasting
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="forecastingDropdown">
-                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="Index">Forecasts</a></li>
-                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="Create">Create Forecast</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="BorrowingRecords">UF6 Borrowing</a></li>
-                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="AddBorrowingRecord">Add UF6 Transaction</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="productionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Production
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="productionDropdown">
-                                <li><a class="dropdown-item" asp-controller="Production" asp-action="Index">Production Forecasts</a></li>
-                                <li><a class="dropdown-item" asp-controller="Production" asp-action="Create">Add Forecast</a></li>
-                            </ul>
-                        </li>
+                       
+                       
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="transportationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Transportation
