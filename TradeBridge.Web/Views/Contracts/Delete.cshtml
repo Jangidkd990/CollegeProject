@@ -1,0 +1,97 @@
+@model TradeBridge.Core.Entities.Contract.Contract
+
+@{
+    ViewData["Title"] = "Delete Contract";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Delete Contract</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index">Contracts</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-header text-danger">
+            <i class="fas fa-exclamation-triangle me-1"></i>
+            Delete Contract #@Model.ContractNumber
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Warning!</h4>
+                <p>You are about to delete this contract. This action cannot be undone.</p>
+                <hr>
+                <p class="mb-0">This will also delete all associated delivery schedules and borrowing records.</p>
+            </div>
+            
+            <dl class="row">
+                <dt class="col-sm-3">Contract Number</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.ContractNumber)</dd>
+                
+                <dt class="col-sm-3">Contract Type</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.ContractType)</dd>
+                
+                @if (Model.ContractType == TradeBridge.Core.Enums.ContractType.Customer)
+                {
+                    <dt class="col-sm-3">Customer</dt>
+                    @if (Model.Customer != null)
+                    {
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Customer.Name)</dd>
+                    }
+                    else
+                    {
+                        <dd class="col-sm-9">Unknown</dd>
+                    }
+                }
+                else
+                {
+                    <dt class="col-sm-3">Supplier</dt>
+                    @if (Model.Supplier != null)
+                    {
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Supplier.Name)</dd>
+                    }
+                    else
+                    {
+                        <dd class="col-sm-9">Unknown</dd>
+                    }
+                }
+                
+                <dt class="col-sm-3">Start Date</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.StartDate)</dd>
+                
+                <dt class="col-sm-3">End Date</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.EndDate)</dd>
+                
+                <dt class="col-sm-3">Base Quantity</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.BaseQuantity)</dd>
+                
+                <dt class="col-sm-3">Pricing Type</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.PricingType)</dd>
+                
+                <dt class="col-sm-3">Delivery Count</dt>
+                <dd class="col-sm-9">@Model.Deliveries.Count</dd>
+                
+                <dt class="col-sm-3">Borrowing Count</dt>
+                <dd class="col-sm-9">@Model.Borrowings.Count</dd>
+            </dl>
+            
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info">
+                        <i class="fas fa-info-circle"></i> Back to Details
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-list"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,347 @@
+@model TradeBridge.Web.Models.Dashboard.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">TradeBridge Dashboard</h1>
+
+    <div class="row">
+        <!-- Key Metrics Summary -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Customer Contracts
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ActiveCustomerContracts</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-file-contract fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Supplier Contracts
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ActiveSupplierContracts</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-file-signature fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Open Forecasts
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ActiveForecasts</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Total Contract Value
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$@Model.TotalContractValue.ToString("N0")</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Revenue Forecast Chart -->
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Revenue Forecast</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                             aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Actions:</div>
+                            <a class="dropdown-item" asp-controller="Forecasts" asp-action="Index">View All Forecasts</a>
+                            <a class="dropdown-item" asp-controller="Forecasts" asp-action="Create">Create New Forecast</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UF6 Pricing Forecast Chart -->
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">UF6 Price Forecast</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                             aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Actions:</div>
+                            <a class="dropdown-item" asp-controller="Forecasts" asp-action="Index">View All Forecasts</a>
+                            <a class="dropdown-item" asp-controller="Forecasts" asp-action="Create">Create New Forecast</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="priceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Upcoming Deliveries -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Upcoming Deliveries (Next 30 Days)</h6>
+                </div>
+                <div class="card-body">
+                    @if (Model.UpcomingDeliveries.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Contract</th>
+                                        <th>Quantity</th>
+                                        <th>Location</th>
+                                        <th>Forecasted Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var delivery in Model.UpcomingDeliveries)
+                                    {
+                                        <tr>
+                                            <td>@delivery.ScheduledDate.ToString("d")</td>
+                                            <td>@delivery.Contract.ContractNumber</td>
+                                            <td>@delivery.Quantity.ToString("N0")</td>
+                                            <td>@(delivery.DeliveryLocation?.Name ?? "Not specified")</td>
+                                            <td>$@delivery.ForecastedPrice?.ToString("N2")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="mb-0">No upcoming deliveries in the next 30 days.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- UF6 Borrowing Summary -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">UF6 Borrowing Summary</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card bg-primary text-white shadow">
+                                <div class="card-body">
+                                    Outstanding Borrows
+                                    <div class="text-white-50 small">@Model.OutstandingBorrowings.Count Records</div>
+                                    <div class="text-white">@Model.TotalBorrowedQuantity.ToString("N0") KgU</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card bg-danger text-white shadow">
+                                <div class="card-body">
+                                    Overdue Borrows
+                                    <div class="text-white-50 small">@Model.OverdueBorrowings.Count Records</div>
+                                    <div class="text-white">@Model.OverdueBorrowings.Sum(b => b.Quantity).ToString("N0") KgU</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.OutstandingBorrowings.Any())
+                    {
+                        <div class="table-responsive mt-3">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Contract</th>
+                                        <th>Borrow Date</th>
+                                        <th>Due Date</th>
+                                        <th>Quantity</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var borrow in Model.OutstandingBorrowings.OrderBy(b => b.DueDate))
+                                    {
+                                        <tr class="@(borrow.DueDate < DateTime.Today ? "table-danger" : "")">
+                                            <td>@borrow.ContractId</td>
+                                            <td>@borrow.TransactionDate.ToString("d")</td>
+                                            <td>@borrow.DueDate.ToString("d")</td>
+                                            <td>@borrow.Quantity.ToString("N0") @borrow.Unit</td>
+                                            <td>
+                                                @if (borrow.DueDate < DateTime.Today)
+                                                {
+                                                    <span class="badge bg-danger">Overdue</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-warning">Outstanding</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="mt-3 mb-0">No outstanding UF6 borrowings.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Revenue Chart
+            @if (Model.CurrentYearRevenueData != null)
+            {
+                <text>
+                var revenueCtx = document.getElementById('revenueChart').getContext('2d');
+                var revenueChart = new Chart(revenueCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: @Json.Serialize(Model.CurrentYearRevenueData.Labels),
+                        datasets: [{
+                            label: 'Revenue Forecast (USD)',
+                            data: @Json.Serialize(Model.CurrentYearRevenueData.Values),
+                            backgroundColor: [
+                                'rgba(78, 115, 223, 0.5)',
+                                'rgba(78, 115, 223, 0.5)',
+                                'rgba(78, 115, 223, 0.5)',
+                                'rgba(78, 115, 223, 0.5)'
+                            ],
+                            borderColor: [
+                                'rgba(78, 115, 223, 1)',
+                                'rgba(78, 115, 223, 1)',
+                                'rgba(78, 115, 223, 1)',
+                                'rgba(78, 115, 223, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                </text>
+            }
+
+            // Price Forecast Chart
+            @if (Model.PriceForecastData != null)
+            {
+                <text>
+                var priceCtx = document.getElementById('priceChart').getContext('2d');
+                var priceChart = new Chart(priceCtx, {
+                    type: 'line',
+                    data: {
+                        labels: @Json.Serialize(Model.PriceForecastData.Labels),
+                        datasets: [{
+                            label: 'UF6 Price Forecast (USD/lb)',
+                            data: @Json.Serialize(Model.PriceForecastData.Values),
+                            backgroundColor: 'rgba(28, 200, 138, 0.1)',
+                            borderColor: 'rgba(28, 200, 138, 1)',
+                            pointBackgroundColor: 'rgba(28, 200, 138, 1)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgba(28, 200, 138, 1)',
+                            borderWidth: 2,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                </text>
+            }
+        });
+    </script>
+} 

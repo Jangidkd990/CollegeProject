@@ -1,0 +1,172 @@
+@model TradeBridge.Core.Entities.Location.Location
+
+@{
+    ViewData["Title"] = "Location Details";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Location Details</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index">Locations</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        @Model.Name
+                        @if (Model.IsActive)
+                        {
+                            <span class="badge bg-success ms-2">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger ms-2">Inactive</span>
+                        }
+                    </div>
+                    <div>
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-list"></i> Back to List
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-4">Location Code</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.Code)</dd>
+                                
+                                <dt class="col-sm-4">Name</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.Name)</dd>
+                                
+                                <dt class="col-sm-4">Address</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.Address)</dd>
+                                
+                                <dt class="col-sm-4">City</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.City)</dd>
+                                
+                                <dt class="col-sm-4">State/Province</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.State)</dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-4">Country</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.Country)</dd>
+                                
+                                <dt class="col-sm-4">Postal Code</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.PostalCode)</dd>
+                                
+                                <dt class="col-sm-4">Shipping Rate</dt>
+                                <dd class="col-sm-8">@(Model.ShippingRate?.ToString("C") ?? "Not specified")</dd>
+                                
+                                <dt class="col-sm-4">Created By</dt>
+                                <dd class="col-sm-8">@Model.CreatedBy on @Model.CreatedAt.ToString("g")</dd>
+                                
+                                @if (Model.ModifiedAt.HasValue)
+                                {
+                                    <dt class="col-sm-4">Modified By</dt>
+                                    <dd class="col-sm-8">@Model.ModifiedBy on @Model.ModifiedAt?.ToString("g")</dd>
+                                }
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Deliveries associated with this location -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-truck me-1"></i>
+                    Deliveries Using This Location
+                </div>
+                <div class="card-body">
+                    @if (Model.Deliveries != null && Model.Deliveries.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="deliveriesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Contract</th>
+                                        <th>Scheduled Date</th>
+                                        <th>Quantity</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var delivery in Model.Deliveries.OrderBy(d => d.ScheduledDate))
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a asp-controller="Contracts" asp-action="Details" asp-route-id="@delivery.ContractId">
+                                                    @delivery.Contract.ContractNumber
+                                                </a>
+                                            </td>
+                                            <td>@delivery.ScheduledDate.ToString("d")</td>
+                                            <td>@delivery.Quantity</td>
+                                            <td>
+                                                @if (delivery.IsDeferred)
+                                                {
+                                                    <span class="badge bg-warning">Deferred</span>
+                                                }
+                                                else
+                                                {
+                                                    if (delivery.ScheduledDate <= DateTime.Today)
+                                                    {
+                                                        <span class="badge bg-success">Completed</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-info">Scheduled</span>
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                <a asp-controller="Contracts" asp-action="EditDelivery" asp-route-id="@delivery.Id" class="btn btn-warning btn-sm">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No deliveries are scheduled for this location.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#deliveriesTable').DataTable({
+                responsive: true,
+                order: [[1, 'asc']]
+            });
+        });
+    </script>
+} 

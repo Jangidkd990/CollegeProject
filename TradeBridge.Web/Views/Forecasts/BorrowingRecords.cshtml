@@ -1,0 +1,151 @@
+@model IEnumerable<TradeBridge.Core.Entities.Forecasting.UF6BorrowingRecord>
+
+@{
+    ViewData["Title"] = "UF6 Borrowing Records";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">UF6 Borrowing Records</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index">Forecasts</a></li>
+            <li class="breadcrumb-item active" aria-current="page">UF6 Borrowing Records</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <i class="fas fa-exchange-alt me-1"></i>
+                UF6 Borrowing Records
+            </div>
+            <div>
+                <a asp-action="AddBorrowingRecord" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> Add New Record
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="borrowingRecordsTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Contract/Customer</th>
+                                <th>Type</th>
+                                <th>Quantity</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderByDescending(b => b.TransactionDate))
+                            {
+                                <tr>
+                                    <td>@item.TransactionDate.ToString("d")</td>
+                                    <td>
+                                        @if (item.ContractId > 0)
+                                        {
+                                            <span>Contract #@item.ContractId</span>
+                                        }
+                                        @if (item.CustomerId.HasValue)
+                                        {
+                                            <span>Customer #@item.CustomerId</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            var badgeClass = item.TransactionType switch
+                                            {
+                                                TradeBridge.Core.Entities.Forecasting.BorrowingTransactionType.Borrow => "bg-danger",
+                                                TradeBridge.Core.Entities.Forecasting.BorrowingTransactionType.Repay => "bg-success",
+                                                TradeBridge.Core.Entities.Forecasting.BorrowingTransactionType.Defer => "bg-warning",
+                                                _ => "bg-secondary"
+                                            };
+                                        }
+                                        <span class="badge @badgeClass">@item.TransactionType</span>
+                                    </td>
+                                    <td>@item.Quantity @item.Unit</td>
+                                    <td>@item.DueDate.ToString("d")</td>
+                                    <td>
+                                        @if (item.IsSettled)
+                                        {
+                                            <span class="badge bg-success">Settled on @item.SettlementDate?.ToString("d")</span>
+                                        }
+                                        else if (item.DueDate < DateTime.Today)
+                                        {
+                                            <span class="badge bg-danger">Overdue</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning">Outstanding</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="EditBorrowingRecord" asp-route-id="@item.Id" class="btn btn-warning btn-sm">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-danger btn-sm" 
+                                                    onclick="confirmDeleteBorrowingRecord(@item.Id)">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    No UF6 borrowing records have been created yet. Click the "Add New Record" button to add one.
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Delete Borrowing Record Confirmation Modal -->
+<div class="modal fade" id="deleteBorrowingModal" tabindex="-1" aria-labelledby="deleteBorrowingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteBorrowingModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this borrowing record?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteBorrowingForm" asp-action="DeleteBorrowingRecord" method="post">
+                    <input type="hidden" id="borrowingIdToDelete" name="id" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#borrowingRecordsTable').DataTable({
+                responsive: true,
+                order: [[0, 'desc']]
+            });
+        });
+        
+        function confirmDeleteBorrowingRecord(id) {
+            $('#borrowingIdToDelete').val(id);
+            $('#deleteBorrowingModal').modal('show');
+        }
+    </script>
+} 

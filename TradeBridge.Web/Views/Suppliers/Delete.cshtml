@@ -1,0 +1,68 @@
+@model TradeBridge.Core.Entities.Supplier.Supplier
+
+@{
+    ViewData["Title"] = "Delete Supplier";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Delete Supplier</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index">Suppliers</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete @Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="alert alert-danger" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <strong>Warning!</strong> Are you sure you want to delete this supplier? This action cannot be undone.
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-trash me-1"></i>
+            Supplier Details
+        </div>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-md-4 fw-bold">Supplier Code:</div>
+                <div class="col-md-8">@Model.SupplierCode</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-4 fw-bold">Name:</div>
+                <div class="col-md-8">@Model.Name</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-4 fw-bold">Address:</div>
+                <div class="col-md-8">
+                    @Model.Address<br />
+                    @Model.City, @Model.State @Model.PostalCode<br />
+                    @Model.Country
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-4 fw-bold">Phone:</div>
+                <div class="col-md-8">@Model.PhoneNumber</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-4 fw-bold">Email:</div>
+                <div class="col-md-8">@Model.Email</div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash me-1"></i> Confirm Delete
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i> Back to List
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

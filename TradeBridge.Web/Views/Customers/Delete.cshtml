@@ -1,0 +1,90 @@
+@model TradeBridge.Core.Entities.Customer.Customer
+
+@{
+    ViewData["Title"] = "Delete Customer";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Delete Customer</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index">Customers</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-header text-danger">
+            <i class="fas fa-exclamation-triangle me-1"></i>
+            Delete Customer - @Model.Name
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Warning!</h4>
+                <p>You are about to delete this customer. This action cannot be undone.</p>
+                <hr>
+                <p class="mb-0">This will also delete any associated customer contacts, and affect any contracts linked to this customer.</p>
+            </div>
+            
+            <dl class="row">
+                <dt class="col-sm-3">Name</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+                
+                <dt class="col-sm-3">Customer Code</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.CustomerCode)</dd>
+                
+                <dt class="col-sm-3">Address</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Address)<br />
+                    @Html.DisplayFor(model => model.City), @Html.DisplayFor(model => model.State) @Html.DisplayFor(model => model.PostalCode)<br />
+                    @Html.DisplayFor(model => model.Country)
+                </dd>
+                
+                <dt class="col-sm-3">Phone Number</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.PhoneNumber)</dd>
+                
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+                
+                <dt class="col-sm-3">Website</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Website)</dd>
+                
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">
+                    @(Model.IsActive ? "Active" : "Inactive")
+                </dd>
+                
+                <dt class="col-sm-3">Created By</dt>
+                <dd class="col-sm-9">@Model.CreatedBy on @Model.CreatedAt.ToString("g")</dd>
+                
+                @if (!string.IsNullOrEmpty(Model.ModifiedBy))
+                {
+                    <dt class="col-sm-3">Modified By</dt>
+                    <dd class="col-sm-9">@Model.ModifiedBy on @Model.ModifiedAt?.ToString("g")</dd>
+                }
+                
+                <dt class="col-sm-3">Contacts</dt>
+                <dd class="col-sm-9">@Model.Contacts.Count</dd>
+                
+                <dt class="col-sm-3">Contracts</dt>
+                <dd class="col-sm-9">@Model.Contracts.Count</dd>
+            </dl>
+            
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info">
+                        <i class="fas fa-info-circle"></i> Back to Details
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 

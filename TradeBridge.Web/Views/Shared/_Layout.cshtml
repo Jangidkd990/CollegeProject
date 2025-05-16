@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TradeBridge</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TradeBridge.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/logo.png" alt="TradeBridge Logo" style="height: 40px;" /> TradeBridge
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Dashboard" asp-action="Index">
+                                <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="customerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Customers
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="customerDropdown">
+                                <li><a class="dropdown-item" asp-controller="Customers" asp-action="Index">Customer List</a></li>
+                                <li><a class="dropdown-item" asp-controller="Customers" asp-action="Create">Add Customer</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="supplierDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Suppliers
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="supplierDropdown">
+                                <li><a class="dropdown-item" asp-controller="Suppliers" asp-action="Index">Supplier List</a></li>
+                                <li><a class="dropdown-item" asp-controller="Suppliers" asp-action="Create">Add Supplier</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="contractDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Contracts
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="contractDropdown">
+                                <li><a class="dropdown-item" asp-controller="Contracts" asp-action="Index">Contract List</a></li>
+                                <li><a class="dropdown-item" asp-controller="Contracts" asp-action="Create">Add Contract</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="locationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Locations
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="locationDropdown">
+                                <li><a class="dropdown-item" asp-controller="Locations" asp-action="Index">Location List</a></li>
+                                <li><a class="dropdown-item" asp-controller="Locations" asp-action="Create">Add Location</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="forecastingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Forecasting
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="forecastingDropdown">
+                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="Index">Forecasts</a></li>
+                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="Create">Create Forecast</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="BorrowingRecords">UF6 Borrowing</a></li>
+                                <li><a class="dropdown-item" asp-controller="Forecasts" asp-action="AddBorrowingRecord">Add UF6 Transaction</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="productionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Production
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="productionDropdown">
+                                <li><a class="dropdown-item" asp-controller="Production" asp-action="Index">Production Forecasts</a></li>
+                                <li><a class="dropdown-item" asp-controller="Production" asp-action="Create">Add Forecast</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="transportationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Transportation
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="transportationDropdown">
+                                <li><a class="dropdown-item" asp-controller="Transportation" asp-action="Index">Transportation Plans</a></li>
+                                <li><a class="dropdown-item" asp-controller="Transportation" asp-action="Create">Add Transportation Plan</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="Transportation" asp-action="ShippingRates">Shipping Rates</a></li>
+                                <li><a class="dropdown-item" asp-controller="Transportation" asp-action="CreateRate">Add Shipping Rate</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <!-- User Authentication Menu -->
+                    <div class="ml-auto">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user-circle me-1"></i> @User.Identity?.Name
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li>
+                                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="fas fa-sign-out-alt me-1"></i> Logout
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - ConverDyn TradeBridge - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
