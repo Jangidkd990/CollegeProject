@@ -1,0 +1,125 @@
+@model PRISM.Core.Entities.Forecasting.Forecast
+
+@{
+    ViewData["Title"] = "Edit Forecast";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Edit Forecast</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index">Forecasts</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-edit me-1"></i>
+            Edit Forecast: @Model.Title
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="CreatedBy" />
+                <input type="hidden" asp-for="CreatedDate" />
+                <input type="hidden" asp-for="IsApproved" />
+                <input type="hidden" asp-for="ApprovedBy" />
+                <input type="hidden" asp-for="ApprovalDate" />
+                
+                @if (Model.IsApproved)
+                {
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        This forecast has been approved and most fields cannot be edited.
+                        Only the description field can be modified.
+                    </div>
+                }
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label">Title</label>
+                            <input asp-for="Title" class="form-control" disabled="@Model.IsApproved" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="ForecastDate" class="form-label">Forecast Date</label>
+                            <input asp-for="ForecastDate" class="form-control" type="date" disabled="@Model.IsApproved" />
+                            <span asp-validation-for="ForecastDate" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="PeriodType" class="form-label">Period Type</label>
+                            <select asp-for="PeriodType" asp-items="ViewBag.PeriodTypes" class="form-select" disabled="@Model.IsApproved">
+                                <option value="">-- Select Period Type --</option>
+                            </select>
+                            <span asp-validation-for="PeriodType" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Type" class="form-label">Forecast Type</label>
+                            <select asp-for="Type" asp-items="ViewBag.ForecastTypes" class="form-select" disabled="@Model.IsApproved">
+                                <option value="">-- Select Forecast Type --</option>
+                            </select>
+                            <span asp-validation-for="Type" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input asp-for="IsActive" class="form-check-input" disabled="@Model.IsApproved" />
+                            <label asp-for="IsActive" class="form-check-label">Is Active</label>
+                        </div>
+                        
+                        @if (Model.IsApproved)
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Approved By</label>
+                                <input value="@Model.ApprovedBy on @Model.ApprovalDate?.ToString("g")" class="form-control" disabled />
+                            </div>
+                        }
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Created By</label>
+                            <input value="@Model.CreatedBy on @Model.CreatedDate.ToString("g")" class="form-control" disabled />
+                        </div>
+                        
+                        @if (!string.IsNullOrEmpty(Model.LastModifiedBy))
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Last Modified By</label>
+                                <input value="@Model.LastModifiedBy on @Model.LastModifiedDate?.ToString("g")" class="form-control" disabled />
+                            </div>
+                        }
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info">
+                        <i class="fas fa-info-circle"></i> Back to Details
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-list"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

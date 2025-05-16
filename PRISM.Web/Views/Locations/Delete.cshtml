@@ -1,0 +1,89 @@
+@model PRISM.Core.Entities.Location.Location
+
+@{
+    ViewData["Title"] = "Delete Location";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Delete Location</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index">Locations</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-header text-danger">
+            <i class="fas fa-exclamation-triangle me-1"></i>
+            Delete Location: @Model.Name
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Warning!</h4>
+                <p>You are about to delete this location. This action cannot be undone.</p>
+                <hr>
+                @if (Model.Deliveries != null && Model.Deliveries.Any())
+                {
+                    <p class="mb-0">
+                        This location is used by @Model.Deliveries.Count deliveries. Deleting this location will affect these deliveries.
+                    </p>
+                }
+                else
+                {
+                    <p class="mb-0">
+                        This location is not currently used for any deliveries and can be safely deleted.
+                    </p>
+                }
+            </div>
+            
+            <dl class="row">
+                <dt class="col-sm-3">Location Code</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Code)</dd>
+                
+                <dt class="col-sm-3">Name</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+                
+                <dt class="col-sm-3">Address</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Address)</dd>
+                
+                <dt class="col-sm-3">City</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.City), @Html.DisplayFor(model => model.State)</dd>
+                
+                <dt class="col-sm-3">Country</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Country)</dd>
+                
+                <dt class="col-sm-3">Shipping Rate</dt>
+                <dd class="col-sm-9">@(Model.ShippingRate?.ToString("C") ?? "Not specified")</dd>
+                
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">
+                    @if (Model.IsActive)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Inactive</span>
+                    }
+                </dd>
+            </dl>
+            
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info">
+                        <i class="fas fa-info-circle"></i> Back to Details
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-list"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 

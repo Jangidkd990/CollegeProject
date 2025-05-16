@@ -1,0 +1,111 @@
+@model PRISM.Core.Entities.Contract.ContractBorrowing
+
+@{
+    ViewData["Title"] = "Add Borrowing";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Add Borrowing</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index">Contracts</a></li>
+            <li class="breadcrumb-item"><a asp-action="Details" asp-route-id="@ViewBag.ContractId">@ViewBag.ContractNumber</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add Borrowing</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-exchange-alt me-1"></i>
+            Add Borrowing to Contract #@ViewBag.ContractNumber
+        </div>
+        <div class="card-body">
+            <form asp-action="AddBorrowing">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <input type="hidden" asp-for="ContractId" />
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="BorrowDate" class="control-label"></label>
+                            <input asp-for="BorrowDate" class="form-control" type="date" />
+                            <span asp-validation-for="BorrowDate" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="BorrowedQuantity" class="control-label"></label>
+                            <input asp-for="BorrowedQuantity" class="form-control" />
+                            <span asp-validation-for="BorrowedQuantity" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="ScheduledRepaymentDate" class="control-label"></label>
+                            <input asp-for="ScheduledRepaymentDate" class="form-control" type="date" />
+                            <span asp-validation-for="ScheduledRepaymentDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-check mb-3">
+                            <input asp-for="IsRepaid" class="form-check-input" id="isRepaid" onchange="toggleRepaymentFields()" />
+                            <label asp-for="IsRepaid" class="form-check-label"></label>
+                        </div>
+                        
+                        <div id="repaymentFields" style="display: none;">
+                            <div class="form-group mb-3">
+                                <label asp-for="ActualRepaymentDate" class="control-label"></label>
+                                <input asp-for="ActualRepaymentDate" class="form-control" type="date" />
+                                <span asp-validation-for="ActualRepaymentDate" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="form-group mb-3">
+                                <label asp-for="RepaidQuantity" class="control-label"></label>
+                                <input asp-for="RepaidQuantity" class="form-control" />
+                                <span asp-validation-for="RepaidQuantity" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label asp-for="Notes" class="control-label"></label>
+                    <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Create
+                    </button>
+                    <a asp-action="Details" asp-route-id="@ViewBag.ContractId" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Contract
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        $(document).ready(function() {
+            toggleRepaymentFields();
+        });
+        
+        function toggleRepaymentFields() {
+            if ($("#isRepaid").is(":checked")) {
+                $("#repaymentFields").show();
+                $("#ActualRepaymentDate").prop("required", true);
+                $("#RepaidQuantity").prop("required", true);
+            } else {
+                $("#repaymentFields").hide();
+                $("#ActualRepaymentDate").prop("required", false);
+                $("#RepaidQuantity").prop("required", false);
+            }
+        }
+    </script>
+} 

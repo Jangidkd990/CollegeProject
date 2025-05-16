@@ -1,0 +1,22 @@
+@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Log out";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card my-5">
+                <div class="card-header bg-primary text-white">
+                    <h3><i class="fas fa-sign-out-alt me-2"></i>Log out</h3>
+                </div>
+                <div class="card-body">
+                    <p>You have successfully logged out of the application.</p>
+                    <hr />
+                    <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Log in again</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
