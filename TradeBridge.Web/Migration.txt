@@ -1,0 +1,4 @@
+dotnet ef migrations add CreateIdentitySchema --context ApplicationIdentityDbContext --project TradeBridge.Web
+dotnet ef migrations add InitialCreate --context ApplicationDbContext --project TradeBridge.Data --startup-project TradeBridge.Web
+dotnet ef database update --context ApplicationIdentityDbContext --project TradeBridge.Web
+dotnet ef database update --context ApplicationDbContext --project TradeBridge.Data --startup-project TradeBridge.Web
